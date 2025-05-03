@@ -1,0 +1,6 @@
+flask
+numpy>=1.21.0
+scikit-learn
+scipy
+spacy
+flask_session
