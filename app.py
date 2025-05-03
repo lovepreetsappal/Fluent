@@ -26,6 +26,19 @@ from scipy.stats import entropy
 import spacy
 import socket
 
+from flask import Flask
+import os
+
+app = Flask(__name__)  # ✅ Define 'app' before using it
+
+@app.route("/")
+def home():
+    return "Hello from Render!"
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+
 
 app = Flask(__name__, static_url_path='', static_folder='', template_folder='templates')
 app.config["SESSION_PERMANENT"] = False
