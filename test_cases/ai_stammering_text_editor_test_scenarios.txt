@@ -1,0 +1,858 @@
+TEST SUITE: AI-Assisted Text Editor for Stammering Support
+
+SECTION: GUI Tests
+
+Test ID: TS-001
+Module: Application Startup
+Scenario: Launch text editor successfully
+Preconditions: Application is installed and dependencies are available
+Steps:
+1. Start the application
+2. Observe the main editor window
+3. Verify the editor area, toolbar, side panels, and status area are visible
+Expected Result: Main text editor opens without error and all essential UI components are loaded correctly
+
+Test ID: TS-002
+Module: Application Startup
+Scenario: Launch application when AI model or configuration is unavailable
+Preconditions: AI model/configuration is missing or inaccessible
+Steps:
+1. Start the application
+2. Observe startup behavior
+Expected Result: Editor opens with graceful degradation or clear error messaging; application does not crash
+
+Test ID: TS-003
+Module: Editor Layout
+Scenario: Verify default editor state on initial load
+Preconditions: Application is launched
+Steps:
+1. Open the main editor window
+2. Inspect text area, suggestion panel, buttons, and indicators
+Expected Result: Editor is empty or preloaded as designed, cursor is visible, and action buttons are in the correct default state
+
+Test ID: TS-004
+Module: Editor Input
+Scenario: Type plain text into the editor
+Preconditions: Editor is open
+Steps:
+1. Click inside the text area
+2. Type a sentence
+3. Observe the entered text
+Expected Result: Text appears correctly in the editor without lag or corruption
+
+Test ID: TS-005
+Module: Toolbar Actions
+Scenario: Trigger AI analysis from toolbar/button
+Preconditions: Text is present in the editor
+Steps:
+1. Enter text in the editor
+2. Click the Analyze button
+3. Observe UI behavior
+Expected Result: AI analysis starts once, progress is shown if applicable, and results are returned to the relevant UI area
+
+Test ID: TS-006
+Module: Toolbar Actions
+Scenario: Trigger suggestion generation for highlighted difficult word
+Preconditions: Text contains at least one AI-detected difficult word
+Steps:
+1. Run AI analysis
+2. Click a highlighted word or associated action
+3. Observe suggestion list
+Expected Result: Suggestions for alternative words appear and map to the selected word correctly
+
+Test ID: TS-007
+Module: Suggestion Interaction
+Scenario: Accept an AI suggestion from the suggestion panel
+Preconditions: AI suggestions are visible for a selected word
+Steps:
+1. Select one suggestion
+2. Apply or accept the suggestion
+3. Inspect editor text
+Expected Result: The original word is replaced correctly and cursor/selection behavior remains usable
+
+Test ID: TS-008
+Module: Suggestion Interaction
+Scenario: Reject an AI suggestion
+Preconditions: AI suggestions are visible
+Steps:
+1. View suggestion list
+2. Dismiss or reject the suggestion
+Expected Result: No unwanted text change occurs and the editor state remains intact
+
+Test ID: TS-009
+Module: Editor Highlighting
+Scenario: Highlight difficult words after AI analysis
+Preconditions: Editor contains analyzable text
+Steps:
+1. Enter text with words likely to be flagged
+2. Run AI analysis
+3. Observe the editor content
+Expected Result: Identified difficult words are highlighted consistently and non-flagged words are left unchanged
+
+Test ID: TS-010
+Module: Editor Highlighting
+Scenario: Verify highlight disappears or updates after replacement
+Preconditions: A difficult word is highlighted
+Steps:
+1. Replace the highlighted word with an accepted suggestion
+2. Re-run analysis if required
+Expected Result: Highlight is removed or updated according to the new word’s difficulty status
+
+Test ID: TS-011
+Module: Editor Input
+Scenario: Paste large text into editor
+Preconditions: Editor is open
+Steps:
+1. Copy a large paragraph or document
+2. Paste it into the editor
+3. Scroll and inspect content
+Expected Result: Text is pasted correctly, formatting behavior matches design, and the editor remains responsive
+
+Test ID: TS-012
+Module: Keyboard Interaction
+Scenario: Use keyboard shortcuts in editor
+Preconditions: Editor is open
+Steps:
+1. Type sample text
+2. Use supported shortcuts such as copy, paste, undo, redo, save, or analyze
+Expected Result: Shortcuts execute the intended commands without breaking editor state
+
+Test ID: TS-013
+Module: Undo/Redo
+Scenario: Undo accepted AI suggestion
+Preconditions: A suggestion has been applied
+Steps:
+1. Accept an AI suggestion
+2. Trigger Undo
+3. Trigger Redo
+Expected Result: Undo restores original text and Redo reapplies the accepted suggestion correctly
+
+Test ID: TS-014
+Module: Cursor and Selection
+Scenario: Preserve cursor position after AI analysis
+Preconditions: Editor contains text and cursor is placed mid-document
+Steps:
+1. Place cursor in the middle of the text
+2. Trigger AI analysis
+3. Observe cursor position
+Expected Result: Cursor position or editor focus is preserved as designed without disruptive jumps
+
+Test ID: TS-015
+Module: Window Lifecycle
+Scenario: Close editor with unsaved changes
+Preconditions: Text has been modified and not saved
+Steps:
+1. Enter or edit text
+2. Attempt to close the window
+Expected Result: User is warned about unsaved changes or behavior follows defined save/discard/cancel policy
+
+Test ID: TS-016
+Module: Window Lifecycle
+Scenario: Reopen editor after previous session
+Preconditions: Session restore or autosave feature exists
+Steps:
+1. Enter text and close the application
+2. Reopen the application
+Expected Result: Previous content is restored if designed, or the editor starts clean with no corrupted state
+
+Test ID: TS-017
+Module: Status Feedback
+Scenario: Show analysis status during AI processing
+Preconditions: Text exists in the editor
+Steps:
+1. Trigger AI analysis
+2. Observe loading indicator or status text
+Expected Result: User receives visible feedback that analysis is in progress and completion is clearly indicated
+
+Test ID: TS-018
+Module: Multi-Panel UI
+Scenario: Toggle suggestion/history/prediction side panel
+Preconditions: Application supports side panels
+Steps:
+1. Open and close each side panel
+2. Verify editor layout adjusts properly
+Expected Result: Panels open/close correctly without obscuring core editor functions
+
+SECTION: Text Editor Functional Tests
+
+Test ID: TS-019
+Module: Editor Content
+Scenario: Load default sample content into editor
+Preconditions: Default content feature exists
+Steps:
+1. Trigger load default content action
+2. Inspect editor contents
+Expected Result: Default text loads completely and is editable
+
+Test ID: TS-020
+Module: Editor Content
+Scenario: Clear editor content
+Preconditions: Editor contains text
+Steps:
+1. Click clear/reset action
+2. Confirm if prompted
+Expected Result: Editor is emptied and related highlights/suggestions are removed
+
+Test ID: TS-021
+Module: File Handling
+Scenario: Save edited text to file
+Preconditions: Editor contains text and save feature exists
+Steps:
+1. Enter or modify text
+2. Save the file
+3. Reopen the saved file
+Expected Result: Saved content matches editor content exactly
+
+Test ID: TS-022
+Module: File Handling
+Scenario: Open an existing text file in editor
+Preconditions: Valid file exists
+Steps:
+1. Trigger open action
+2. Select a valid file
+3. Observe editor content
+Expected Result: File content loads correctly and remains editable
+
+Test ID: TS-023
+Module: File Handling
+Scenario: Save As creates a new file without overwriting original
+Preconditions: Existing file is open
+Steps:
+1. Modify content
+2. Use Save As with a new file name
+3. Compare original and new files
+Expected Result: New file contains updated text and original file remains unchanged
+
+Test ID: TS-024
+Module: Autosave
+Scenario: Autosave preserves recent edits if feature exists
+Preconditions: Autosave is enabled
+Steps:
+1. Enter text
+2. Wait for autosave interval
+3. Restart application or inspect saved draft
+Expected Result: Recent content is preserved according to autosave rules
+
+Test ID: TS-025
+Module: Versioning/History
+Scenario: View revision history after multiple edits if feature exists
+Preconditions: History tracking is enabled
+Steps:
+1. Make several edits
+2. Open history panel
+Expected Result: Each change or snapshot is listed accurately and can be reviewed as designed
+
+SECTION: AI Interaction Tests
+
+Test ID: TS-026
+Module: AI Detection
+Scenario: Detect potentially hard-to-say words in normal sentence
+Preconditions: AI analysis is available
+Steps:
+1. Enter a normal sentence
+2. Run analysis
+Expected Result: AI flags candidate words based on its model and displays results without corrupting text
+
+Test ID: TS-027
+Module: AI Detection
+Scenario: Detect difficult words in long paragraph
+Preconditions: AI analysis is available
+Steps:
+1. Paste a long paragraph
+2. Run analysis
+Expected Result: Analysis completes successfully and difficult words are identified across the full passage
+
+Test ID: TS-028
+Module: AI Suggestions
+Scenario: Suggest easier alternatives with similar meaning
+Preconditions: At least one difficult word is detected
+Steps:
+1. Select a flagged word
+2. Request suggestions
+Expected Result: Suggestions are semantically relevant, readable, and easier-to-say candidates are displayed
+
+Test ID: TS-029
+Module: AI Suggestions
+Scenario: Ensure suggestions are contextual, not only dictionary-based
+Preconditions: A flagged word appears in a sentence where context matters
+Steps:
+1. Enter contextual text
+2. Run analysis and inspect suggestions
+Expected Result: Suggested alternatives fit the sentence context and do not introduce obvious semantic errors
+
+Test ID: TS-030
+Module: AI Suggestions
+Scenario: Multiple suggestions are provided for the same word
+Preconditions: Suggestion feature is enabled
+Steps:
+1. Select a difficult word
+2. Open suggestion list
+Expected Result: More than one meaningful alternative is shown when available
+
+Test ID: TS-031
+Module: AI Suggestions
+Scenario: AI returns no suggestion for a flagged word
+Preconditions: AI is unable to find alternatives
+Steps:
+1. Trigger suggestions for a flagged word
+2. Observe UI behavior
+Expected Result: User sees a clear no-suggestion message and application remains stable
+
+Test ID: TS-032
+Module: AI Scoring
+Scenario: Display confidence or difficulty score if supported
+Preconditions: AI returns score metadata
+Steps:
+1. Analyze text
+2. Inspect score display
+Expected Result: Score is shown correctly and corresponds to the associated word or phrase
+
+Test ID: TS-033
+Module: AI Learning
+Scenario: Feedback improves future suggestions if adaptive learning exists
+Preconditions: System supports user feedback learning
+Steps:
+1. Reject or accept several suggestions
+2. Analyze similar text later
+Expected Result: AI behavior reflects stored feedback according to design without damaging prior data
+
+Test ID: TS-034
+Module: AI Feedback
+Scenario: Mark a word as easy or difficult manually
+Preconditions: Manual feedback controls exist
+Steps:
+1. Select a word
+2. Mark it as easy or difficult
+3. Re-run analysis
+Expected Result: Manual feedback is stored and affects future decisions as intended
+
+Test ID: TS-035
+Module: AI Phrase Handling
+Scenario: Handle repeated difficult words across the document
+Preconditions: Same difficult word appears multiple times
+Steps:
+1. Enter a document with repeated target words
+2. Run analysis
+Expected Result: All relevant occurrences are identified or handled consistently per design
+
+Test ID: TS-036
+Module: AI Phrase Handling
+Scenario: Handle multi-word expressions or phrases
+Preconditions: AI supports phrase-level analysis or replacement
+Steps:
+1. Enter text containing phrase-level difficulty
+2. Run analysis
+Expected Result: Phrase suggestions or phrase flags are shown correctly if supported
+
+Test ID: TS-037
+Module: AI Resilience
+Scenario: AI returns malformed response payload
+Preconditions: AI service/mock returns malformed data
+Steps:
+1. Trigger AI analysis or suggestions
+2. Observe system behavior
+Expected Result: Malformed output is rejected safely and user sees meaningful error feedback
+
+Test ID: TS-038
+Module: AI Resilience
+Scenario: AI returns unrelated or semantically wrong replacement
+Preconditions: AI output can be mocked
+Steps:
+1. Trigger suggestion for a difficult word
+2. Inspect returned alternative
+Expected Result: Invalid or semantically incorrect suggestion is not auto-applied and is either filtered or left for explicit user review
+
+Test ID: TS-039
+Module: AI Resilience
+Scenario: AI service timeout during text analysis
+Preconditions: Timeout can be simulated
+Steps:
+1. Trigger AI analysis
+2. Delay AI response beyond timeout threshold
+Expected Result: Timeout is handled gracefully, editor remains responsive, and partial text is preserved
+
+Test ID: TS-040
+Module: AI Resilience
+Scenario: AI service unavailable during suggestion fetch
+Preconditions: AI endpoint/service is down
+Steps:
+1. Request word suggestions
+2. Observe UI behavior
+Expected Result: User receives a recoverable error and can continue editing without data loss
+
+Test ID: TS-041
+Module: AI Usability
+Scenario: Accept suggestion for one occurrence only
+Preconditions: Same word appears multiple times
+Steps:
+1. Select one flagged occurrence
+2. Accept a suggestion
+3. Inspect the rest of the document
+Expected Result: Only the selected occurrence changes unless bulk replace is explicitly chosen
+
+Test ID: TS-042
+Module: AI Usability
+Scenario: Replace all occurrences with one accepted suggestion
+Preconditions: Replace-all feature exists
+Steps:
+1. Select a flagged repeated word
+2. Choose Replace All
+Expected Result: All intended occurrences are replaced correctly and unrelated words remain unchanged
+
+SECTION: Validation Tests
+
+Test ID: TS-043
+Module: Input Validation
+Scenario: Analyze empty editor content
+Preconditions: Editor is empty
+Steps:
+1. Click Analyze
+Expected Result: Analysis does not run on empty input; user gets clear instruction or empty-result behavior
+
+Test ID: TS-044
+Module: Input Validation
+Scenario: Analyze whitespace-only content
+Preconditions: Editor contains only spaces, tabs, or newlines
+Steps:
+1. Trigger AI analysis
+Expected Result: Whitespace-only input is treated as empty and no invalid processing occurs
+
+Test ID: TS-045
+Module: Input Validation
+Scenario: Enter very long single word
+Preconditions: Editor is open
+Steps:
+1. Type or paste an extremely long token
+2. Run analysis
+Expected Result: Application handles tokenization safely without freezing or crashing
+
+Test ID: TS-046
+Module: Input Validation
+Scenario: Enter text containing punctuation-heavy content
+Preconditions: Editor is open
+Steps:
+1. Enter text with commas, quotes, dashes, brackets, and symbols
+2. Run analysis
+Expected Result: Punctuation is preserved correctly and AI logic does not fail unexpectedly
+
+Test ID: TS-047
+Module: Input Validation
+Scenario: Enter Unicode and multilingual content
+Preconditions: Editor supports Unicode input
+Steps:
+1. Enter accented words and non-Latin script
+2. Run editor actions and save text
+Expected Result: Text is preserved correctly and unsupported language behavior is handled clearly
+
+Test ID: TS-048
+Module: Validation
+Scenario: Attempt suggestion application when no word is selected
+Preconditions: Suggestion panel is available
+Steps:
+1. Ensure no word is selected
+2. Click Apply Suggestion
+Expected Result: Action is blocked or ignored with clear user guidance
+
+Test ID: TS-049
+Module: Validation
+Scenario: Attempt replace action when AI returned empty list
+Preconditions: Suggestion list is empty
+Steps:
+1. Try to apply a replacement
+Expected Result: No change occurs and user gets clear feedback
+
+SECTION: CRUD-Like Content Management Tests
+
+Test ID: TS-050
+Module: Create Content
+Scenario: Create a new document from scratch
+Preconditions: Editor is open
+Steps:
+1. Start a new document
+2. Enter text
+3. Save the document
+Expected Result: New document is created successfully and stored correctly
+
+Test ID: TS-051
+Module: Read Content
+Scenario: Open and read an existing saved document
+Preconditions: A saved document exists
+Steps:
+1. Open the document
+2. Inspect content
+Expected Result: Exact saved content loads into the editor correctly
+
+Test ID: TS-052
+Module: Update Content
+Scenario: Edit existing document and save changes
+Preconditions: Existing document is open
+Steps:
+1. Modify content
+2. Save changes
+3. Reopen file
+Expected Result: Updated content persists correctly
+
+Test ID: TS-053
+Module: Delete Content
+Scenario: Delete a saved draft or document if feature exists
+Preconditions: Saved document exists
+Steps:
+1. Select document from list/history
+2. Trigger Delete
+3. Confirm action if prompted
+Expected Result: Document is removed from storage and no longer appears in file/draft list
+
+Test ID: TS-054
+Module: Document Workflow
+Scenario: New -> Analyze -> Replace -> Save -> Reopen
+Preconditions: Application is ready
+Steps:
+1. Create a new document
+2. Enter text
+3. Run AI analysis
+4. Apply one or more suggestions
+5. Save document
+6. Reopen document
+Expected Result: Final saved content matches accepted AI-assisted edits exactly
+
+SECTION: Error Handling Tests
+
+Test ID: TS-055
+Module: File Handling
+Scenario: Open invalid or corrupted file
+Preconditions: Invalid or corrupted text file exists
+Steps:
+1. Attempt to open the file
+Expected Result: Application reports the error safely and current editor session is not corrupted
+
+Test ID: TS-056
+Module: File Handling
+Scenario: Save file to restricted location
+Preconditions: User selects a location without write permission
+Steps:
+1. Attempt to save the current document
+Expected Result: Permission error is handled gracefully and unsaved content remains in the editor
+
+Test ID: TS-057
+Module: Crash Recovery
+Scenario: Recover unsaved editor content after abnormal shutdown if supported
+Preconditions: Recovery mechanism exists
+Steps:
+1. Enter unsaved text
+2. Simulate crash or forced shutdown
+3. Restart application
+Expected Result: Recoverable content is restored or a recovery prompt is shown
+
+Test ID: TS-058
+Module: Event Handling
+Scenario: Button click triggers duplicate AI analysis due to rapid repeated clicks
+Preconditions: Text is in the editor
+Steps:
+1. Click Analyze multiple times rapidly
+2. Observe behavior
+Expected Result: Duplicate requests are prevented or handled safely without inconsistent UI state
+
+Test ID: TS-059
+Module: Editor State
+Scenario: Suggestion panel shows stale results after text changes
+Preconditions: Suggestions are displayed
+Steps:
+1. Edit the underlying text after suggestions appear
+2. Inspect suggestion panel
+Expected Result: Stale suggestions are cleared, invalidated, or marked outdated
+
+Test ID: TS-060
+Module: Editor State
+Scenario: Highlight positions remain accurate after text edits
+Preconditions: Words are already highlighted
+Steps:
+1. Insert or delete text before highlighted words
+2. Observe highlights
+Expected Result: Highlight locations update correctly and do not drift to wrong words
+
+SECTION: Edge Cases
+
+Test ID: TS-061
+Module: Editor Edge Cases
+Scenario: Analyze document with repeated spaces and line breaks
+Preconditions: Editor is open
+Steps:
+1. Enter text with irregular spacing and multiple blank lines
+2. Run analysis
+Expected Result: Tokenization and highlighting remain accurate despite irregular formatting
+
+Test ID: TS-062
+Module: Editor Edge Cases
+Scenario: Analyze document containing only punctuation
+Preconditions: Editor is open
+Steps:
+1. Enter punctuation characters only
+2. Run analysis
+Expected Result: Application handles content safely and returns no invalid word suggestions
+
+Test ID: TS-063
+Module: Editor Edge Cases
+Scenario: Analyze text with numbers, dates, and mixed alphanumeric tokens
+Preconditions: Editor is open
+Steps:
+1. Enter text containing values like 2026, A1, 3rd, and dates
+2. Run analysis
+Expected Result: Non-word tokens are handled correctly and do not produce misleading suggestions
+
+Test ID: TS-064
+Module: Editor Edge Cases
+Scenario: Very large multi-page document analysis
+Preconditions: Large text sample is available
+Steps:
+1. Paste a multi-page document
+2. Run AI analysis
+Expected Result: Analysis completes within acceptable time and UI remains usable
+
+Test ID: TS-065
+Module: Editor Edge Cases
+Scenario: Replace word at beginning of document
+Preconditions: First word is flagged
+Steps:
+1. Accept a suggestion for the first word
+Expected Result: Replacement works without deleting surrounding text or adding formatting errors
+
+Test ID: TS-066
+Module: Editor Edge Cases
+Scenario: Replace word at end of document
+Preconditions: Last word is flagged
+Steps:
+1. Accept a suggestion for the last word
+Expected Result: Replacement works correctly at end-of-text boundary
+
+Test ID: TS-067
+Module: Editor Edge Cases
+Scenario: Replace word adjacent to punctuation
+Preconditions: Flagged word is followed or preceded by punctuation
+Steps:
+1. Accept a suggestion
+2. Inspect punctuation
+Expected Result: Punctuation remains intact and correctly positioned
+
+Test ID: TS-068
+Module: Editor Edge Cases
+Scenario: Handle duplicate suggestions returned by AI
+Preconditions: AI returns repeated alternatives
+Steps:
+1. Request suggestions for a flagged word
+2. Inspect the suggestion list
+Expected Result: Duplicate entries are removed or handled cleanly in the UI
+
+SECTION: Performance Tests
+
+Test ID: TS-069
+Module: Editor Performance
+Scenario: Typing remains responsive while AI features are enabled
+Preconditions: Editor is open and AI background support is active
+Steps:
+1. Type continuously in the editor
+2. Observe latency and lag
+Expected Result: Typing remains smooth within acceptable responsiveness threshold
+
+Test ID: TS-070
+Module: AI Performance
+Scenario: Analyze medium-length text within acceptable time
+Preconditions: Editor contains standard paragraph-sized content
+Steps:
+1. Trigger analysis
+2. Measure response time
+Expected Result: AI results return within acceptable threshold
+
+Test ID: TS-071
+Module: AI Performance
+Scenario: Suggestion retrieval for a single word is fast
+Preconditions: A flagged word is selected
+Steps:
+1. Request suggestions
+2. Measure response time
+Expected Result: Suggestion list appears within acceptable threshold
+
+Test ID: TS-072
+Module: Memory Stability
+Scenario: Repeated analysis does not cause memory leak
+Preconditions: Monitoring is available
+Steps:
+1. Run analysis repeatedly on edited text
+2. Observe memory usage over time
+Expected Result: No unacceptable memory growth occurs
+
+Test ID: TS-073
+Module: Large Document Performance
+Scenario: Scrolling highlighted large document remains usable
+Preconditions: Large analyzed document is loaded
+Steps:
+1. Scroll rapidly through the document
+2. Observe UI smoothness
+Expected Result: Highlight rendering does not make the editor unusable
+
+SECTION: Security Tests
+
+Test ID: TS-074
+Module: Input Security
+Scenario: Enter script-like or injection-like text in editor
+Preconditions: Editor is open
+Steps:
+1. Paste input containing SQL-like strings, HTML, or command-like syntax
+2. Save and analyze the text
+Expected Result: Content is treated as plain text and no unintended execution occurs
+
+Test ID: TS-075
+Module: File Security
+Scenario: Open path traversal style file path if file entry is user-editable
+Preconditions: Application exposes file path input
+Steps:
+1. Enter unauthorized relative or absolute path
+2. Attempt open/save
+Expected Result: Invalid path is blocked according to file access rules
+
+Test ID: TS-076
+Module: Privacy
+Scenario: Ensure user text is not exposed unintentionally in logs during AI processing
+Preconditions: Logging is enabled
+Steps:
+1. Analyze sensitive text
+2. Inspect generated logs
+Expected Result: Sensitive editor content is masked or logged only according to approved privacy rules
+
+Test ID: TS-077
+Module: Privacy
+Scenario: Ensure AI suggestion history is cleared on request
+Preconditions: History or cache exists
+Steps:
+1. Generate suggestions
+2. Use clear history/reset action
+Expected Result: Sensitive suggestions and related metadata are removed as designed
+
+SECTION: Usability Tests
+
+Test ID: TS-078
+Module: Usability
+Scenario: Highlighted words are visually distinguishable
+Preconditions: AI analysis has flagged words
+Steps:
+1. Review highlighted words in normal editing context
+Expected Result: Highlighting is clear, readable, and does not reduce text legibility
+
+Test ID: TS-079
+Module: Usability
+Scenario: Suggestion list is understandable and easy to act on
+Preconditions: Suggestion panel is visible
+Steps:
+1. Review suggestion entries
+2. Attempt to accept or reject them
+Expected Result: Labels and actions are clear and do not confuse the user
+
+Test ID: TS-080
+Module: Usability
+Scenario: Editor clearly indicates which word is currently under review
+Preconditions: Multiple highlighted words exist
+Steps:
+1. Select one highlighted word
+2. Observe linked UI state
+Expected Result: Current selection is obvious in both editor and suggestion panel
+
+Test ID: TS-081
+Module: Usability
+Scenario: User can complete editing flow without mouse if keyboard support exists
+Preconditions: Keyboard navigation is supported
+Steps:
+1. Open document
+2. Navigate text
+3. Trigger analysis
+4. Move between suggestions
+5. Apply a suggestion
+Expected Result: Core AI-assisted editing workflow is possible from keyboard controls alone
+
+Test ID: TS-082
+Module: Usability
+Scenario: Error messages for AI failures are understandable
+Preconditions: AI failure can be simulated
+Steps:
+1. Trigger analysis failure
+2. Read displayed message
+Expected Result: Message explains the problem in user-friendly language and suggests next action
+
+SECTION: Negative Tests
+
+Test ID: TS-083
+Module: Negative AI
+Scenario: AI flags nearly every word in normal text
+Preconditions: AI output can be simulated or tuned
+Steps:
+1. Analyze a normal paragraph
+2. Observe volume of flagged words
+Expected Result: UI remains usable and over-flagging is handled in a way that does not break editing flow
+
+Test ID: TS-084
+Module: Negative AI
+Scenario: AI flags no words in obviously difficult input
+Preconditions: AI output can be simulated
+Steps:
+1. Analyze a crafted input expected to produce flags
+2. Observe results
+Expected Result: System handles low-sensitivity behavior safely and allows manual override/feedback if supported
+
+Test ID: TS-085
+Module: Negative Editor
+Scenario: Apply suggestion after source word has been manually edited
+Preconditions: Suggestions were generated earlier
+Steps:
+1. Modify the flagged word manually
+2. Try to apply old suggestion
+Expected Result: Application blocks stale replacement or recalculates safely
+
+Test ID: TS-086
+Module: Negative File Handling
+Scenario: Save operation interrupted mid-process
+Preconditions: Interruption can be simulated
+Steps:
+1. Attempt save
+2. Interrupt the process or target storage
+Expected Result: File is not left in corrupted partial state, or recovery handling is applied
+
+Test ID: TS-087
+Module: Negative Workflow
+Scenario: Analyze, reject all suggestions, and save unchanged content
+Preconditions: AI identifies difficult words
+Steps:
+1. Run analysis
+2. Reject all suggestions
+3. Save document
+Expected Result: Original text remains unchanged and saves correctly
+
+Test ID: TS-088
+Module: Negative Workflow
+Scenario: Accept multiple suggestions that create awkward grammar
+Preconditions: Multiple flagged words exist
+Steps:
+1. Apply several suggestions in sequence
+2. Review resulting sentence
+Expected Result: System allows user control but does not silently auto-apply poor replacements without confirmation
+
+Test ID: TS-089
+Module: Negative Workflow
+Scenario: Close suggestion panel while replacement action is pending
+Preconditions: Suggestion fetch is in progress
+Steps:
+1. Trigger suggestions
+2. Close panel immediately
+Expected Result: No crash or orphan UI state occurs
+
+Test ID: TS-090
+Module: End-to-End
+Scenario: Full editor workflow with AI assistance and save lifecycle
+Preconditions: Application, file handling, and AI features are available
+Steps:
+1. Open the editor
+2. Enter or load text
+3. Analyze for difficult words
+4. Review highlighted words
+5. Accept some suggestions and reject others
+6. Undo one accepted suggestion
+7. Save the document
+8. Reopen the document
+Expected Result: Final reopened content matches the user’s intentional edits, AI interactions are reflected correctly, and no data is lost
