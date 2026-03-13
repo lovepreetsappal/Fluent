@@ -4,7 +4,7 @@ from pages.editor_page import EditorPage
 from utils.helpers import mock_datamuse, mock_default_content, mock_difficult_check, mock_update
 
 
-def test_accepting_a_suggestion_replaces_the_selected_hard_word(editor_page: EditorPage) -> None:
+def test_accepting_an_easier_word_helps_refine_a_short_presentation_line(editor_page: EditorPage) -> None:
     mock_default_content(editor_page.page, "Graph ideas improve confidence.")
     mock_update(
         editor_page.page,
@@ -39,7 +39,7 @@ def test_accepting_a_suggestion_replaces_the_selected_hard_word(editor_page: Edi
     assert difficult_requests[-1]["thresh"] == "70"
 
 
-def test_ignoring_a_suggestion_keeps_the_original_word_and_marks_it_easy(editor_page: EditorPage) -> None:
+def test_ignoring_a_suggestion_keeps_the_user_in_control_of_their_original_wording(editor_page: EditorPage) -> None:
     mock_default_content(editor_page.page, "Graph ideas improve confidence.")
     mock_update(
         editor_page.page,
@@ -57,7 +57,7 @@ def test_ignoring_a_suggestion_keeps_the_original_word_and_marks_it_easy(editor_
     expect(editor_page.easy_words_input).to_contain_text("graph")
 
 
-def test_active_learning_yes_adds_current_word_to_difficult_list(editor_page: EditorPage) -> None:
+def test_marking_a_review_word_as_difficult_updates_personalized_feedback(editor_page: EditorPage) -> None:
     mock_default_content(editor_page.page, "Group presentations can be stressful.")
     update_requests = mock_update(
         editor_page.page,
@@ -74,7 +74,7 @@ def test_active_learning_yes_adds_current_word_to_difficult_list(editor_page: Ed
     assert update_requests, "Expected the Yes action to trigger a model refresh request."
 
 
-def test_active_learning_no_adds_current_word_to_easy_list(editor_page: EditorPage) -> None:
+def test_marking_a_review_word_as_easy_teaches_the_model_user_specific_comfort(editor_page: EditorPage) -> None:
     mock_default_content(editor_page.page, "Green rooms can still feel tense.")
     mock_update(
         editor_page.page,
@@ -88,3 +88,20 @@ def test_active_learning_no_adds_current_word_to_easy_list(editor_page: EditorPa
     editor_page.choose_active_learning_feedback(difficult=False)
 
     expect(editor_page.easy_words_input).to_contain_text("green")
+
+
+def test_hovering_a_named_entity_keeps_the_review_experience_safe_and_non_intrusive(
+    editor_page: EditorPage,
+) -> None:
+    mock_default_content(editor_page.page, "Alice thanked the group for coming.")
+    mock_update(
+        editor_page.page,
+        hard_words=[["alice", 0.91, "PERSON"]],
+        next_word="group",
+    )
+    mock_difficult_check(editor_page.page, alternatives=[])
+
+    editor_page.goto()
+    editor_page.hover_hard_word("alice")
+
+    assert editor_page.popover_options() == ["Ignore"]

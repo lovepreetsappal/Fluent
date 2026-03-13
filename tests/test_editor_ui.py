@@ -4,17 +4,19 @@ from pages.editor_page import EditorPage
 from utils.helpers import mock_default_content, mock_update
 
 
-def test_home_page_loads_default_content_and_editor(editor_page: EditorPage) -> None:
-    mock_default_content(editor_page.page, "This is the default script.")
+def test_opening_fluent_loads_the_default_script_and_editor(editor_page: EditorPage) -> None:
+    mock_default_content(editor_page.page, "Welcome to your practice script.")
     mock_update(editor_page.page, hard_words=[], next_word="group")
 
     editor_page.goto()
 
-    expect(editor_page.editor).to_contain_text("This is the default script.")
+    expect(editor_page.editor).to_contain_text("Welcome to your practice script.")
     expect(editor_page.active_learning_word).to_have_text("group")
 
 
-def test_preferences_modal_updates_threshold_and_applies_highlighting(editor_page: EditorPage) -> None:
+def test_raising_the_threshold_updates_preferences_and_reduces_review_to_confident_matches(
+    editor_page: EditorPage,
+) -> None:
     mock_default_content(editor_page.page, "Graph theory helps group presentations.")
     update_requests = mock_update(
         editor_page.page,
@@ -39,7 +41,7 @@ def test_preferences_modal_updates_threshold_and_applies_highlighting(editor_pag
     expect(editor_page.active_learning_word).to_have_text("printer")
 
 
-def test_update_button_reapplies_highlighting_to_current_editor_text(editor_page: EditorPage) -> None:
+def test_updating_a_revised_sentence_reapplies_highlighting_to_the_latest_draft(editor_page: EditorPage) -> None:
     mock_default_content(editor_page.page, "placeholder")
     update_requests = mock_update(
         editor_page.page,
@@ -54,4 +56,22 @@ def test_update_button_reapplies_highlighting_to_current_editor_text(editor_page
     expect(editor_page.editor).to_contain_text("A crisis can feel grave.")
     assert set(editor_page.highlighted_words_text()) == {"crisis", "grave"}
     assert "a crisis can feel grave." in update_requests[-1]["text"]
+
+
+def test_reviewing_a_longer_practice_paragraph_keeps_multiple_highlights_visible(editor_page: EditorPage) -> None:
+    mock_default_content(editor_page.page, "placeholder")
+    mock_update(
+        editor_page.page,
+        hard_words=[["graph", 0.92, ""], ["group", 0.87, ""], ["grave", 0.9, ""]],
+        next_word="printer",
+    )
+
+    editor_page.goto()
+    editor_page.set_editor_text(
+        "Graph ideas help the group stay calm. A grave tone can make the opening feel harder."
+    )
+    editor_page.update_toolbar_button.click()
+
+    expect(editor_page.editor).to_contain_text("Graph ideas help the group stay calm.")
+    assert set(editor_page.highlighted_words_text()) == {"graph", "group", "grave"}
 

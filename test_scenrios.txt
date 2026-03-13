@@ -1,0 +1,15 @@
+Open Fluent and confirm the editor is ready for use
+Type a short practice sentence into the editor
+Load the built-in sample script on first visit
+Highlight likely difficult words after updating the model
+Update highlighting after revising the current sentence
+Review a longer practice paragraph and re-run highlighting
+Open the Preferences modal successfully
+Raise the confidence threshold to reduce over-highlighting
+Lower the confidence threshold to review more possible words
+Open the Active Learning modal successfully
+Mark the current review word through active learning
+Prepare a short presentation opening line
+Open Fluent then update the editor multiple times
+Open Preferences and return to the editor
+Open Active Learning and return to the editor
